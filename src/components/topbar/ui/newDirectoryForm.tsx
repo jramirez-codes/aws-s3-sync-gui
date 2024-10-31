@@ -26,24 +26,36 @@ export function NewDirectoryForm(props: { children: ReactNode }) {
             Add a folder path, and the corresponding s3 folder path.
           </DrawerDescription>
         </DrawerHeader>
-        <div className="flex justify-center">
+        <div className="flex justify-evenly">
           <div className="w-[50vw]">
-            <div className="grid w-full max-w-sm items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="email">Title</Label>
-              <Input id="title" placeholder="Friendly Name" />
+              <Input
+                id="title"
+                className="rounded-sm"
+                placeholder="Friendly Name"
+              />
             </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5 mt-3">
+            <div className="grid w-full items-center gap-1.5 mt-3">
               <Label htmlFor="email">Folder Path</Label>
-              <Input id="filepath" placeholder="File Path" />
+              <Input
+                id="filepath"
+                className="rounded-sm"
+                placeholder="File Path"
+              />
             </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5 mt-3">
+            <div className="grid w-full items-center gap-1.5 mt-3">
               <Label htmlFor="email">S3 Bucket Path</Label>
-              <Input id="s3Path" placeholder="s3://something/" />
+              <Input
+                id="s3Path"
+                className="rounded-sm"
+                placeholder="s3://something/"
+              />
             </div>
           </div>
         </div>
         <DrawerFooter>
-          <Button>Submit</Button>
+          <Button>Save</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
