@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { S3Link } from "../../types/s3Link";
-import { TrashIcon } from "@radix-ui/react-icons";
+import { InfoCircledIcon, DownloadIcon, TrashIcon, UploadIcon } from "@radix-ui/react-icons";
 import React from "react";
 export function FolderCard(props: {
   s3Link: S3Link,
@@ -22,9 +22,14 @@ export function FolderCard(props: {
   return (
     <div className="inline h-[100%] relative" onMouseEnter={() => { setIsHovering(true) }} onMouseLeave={() => { setIsHovering(false) }}>
       {isHovering && (
-        <Button onClick={()=>{props.onDelete(props.idx)}} variant={"ghost"} className="rounded-xl absolute top-0 right-0" >
-          <TrashIcon />
-        </Button>
+        <div className="absolute top-0 right-0">
+          <Button onClick={() => { props.onDelete(props.idx) }} variant={"ghost"} className="rounded-xl block" >
+            <TrashIcon />
+          </Button>
+          <Button onClick={() => { props.onOpenInfo(props.idx) }} variant={"ghost"} className="rounded-xl block">
+            <InfoCircledIcon />
+          </Button>
+        </div>
       )}
       <Card className="h-[100%]">
         <CardHeader>
@@ -33,10 +38,12 @@ export function FolderCard(props: {
         </CardHeader>
         <CardContent>
           <Button onClick={() => { props.onSyncData(props.idx) }} variant={"outline"} className="rounded m-1 w-[100%]">
-            Sync Data
+            <UploadIcon />
+            Upload Data
           </Button>
-          <Button onClick={() => { props.onOpenInfo(props.idx) }} variant={"outline"} className="rounded m-1 w-[100%]">
-            Open Info
+          <Button onClick={() => { props.onSyncData(props.idx) }} variant={"outline"} className="rounded m-1 w-[100%]">
+            <DownloadIcon />
+            Sync Data
           </Button>
         </CardContent>
         {/* <CardFooter>
