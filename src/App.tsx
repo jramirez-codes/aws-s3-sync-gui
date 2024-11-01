@@ -1,6 +1,3 @@
-// import { useState } from "react";
-// import reactLogo from "./assets/react.svg";
-// import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 import { FolderCard } from "./components/folderCard/folderCard";
 import { Topbar } from "./components/topbar/topbar";
