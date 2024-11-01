@@ -10,6 +10,16 @@
     "shell:allow-open",
     "dialog:default",
     "fs:default",
-    "store:default"
+    "store:default",
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "aws-s3-sync",
+          "cmd": "aws",
+          "args": ["s3", "sync", { "validator": ".*" }]
+        }
+      ]
+    }
   ]
 }

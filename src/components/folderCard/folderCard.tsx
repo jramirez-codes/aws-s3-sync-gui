@@ -9,11 +9,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { S3Link } from "../../types/s3Link";
 import { InfoCircledIcon, DownloadIcon, TrashIcon, UploadIcon } from "@radix-ui/react-icons";
+import { ReloadIcon } from "@radix-ui/react-icons"
 import React from "react";
+
 export function FolderCard(props: {
   s3Link: S3Link,
   idx: number,
-  onSyncData: Function,
+  isFetching: boolean,
+  isUploading: boolean,
+  isDownloading: boolean,
+  onDownload: Function,
+  onUpload: Function,
   onDelete: Function,
   onOpenInfo: Function
 }) {
@@ -23,7 +29,7 @@ export function FolderCard(props: {
     <div className="inline h-[100%] relative" onMouseEnter={() => { setIsHovering(true) }} onMouseLeave={() => { setIsHovering(false) }}>
       {isHovering && (
         <div className="absolute top-0 right-0">
-          <Button onClick={() => { props.onDelete(props.idx) }} variant={"ghost"} className="rounded-xl block" >
+          <Button onClick={() => { props.onDelete(props.idx) }} variant={"ghost"} className="rounded-xl block" disabled={props.isFetching}>
             <TrashIcon />
           </Button>
           <Button onClick={() => { props.onOpenInfo(props.idx) }} variant={"ghost"} className="rounded-xl block">
@@ -37,12 +43,20 @@ export function FolderCard(props: {
           <CardDescription>{props.s3Link.description}</CardDescription>
         </CardHeader>
         <CardContent>
-          <Button onClick={() => { props.onSyncData(props.idx) }} variant={"outline"} className="rounded m-1 w-[100%]">
-            <UploadIcon />
+          <Button onClick={() => { props.onUpload(props.idx) }} variant={"outline"} className="rounded m-1 w-[100%]" disabled={props.isFetching}>
+            {props.isUploading? (
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            ):(
+              <UploadIcon />
+            )}
             Upload Data
           </Button>
-          <Button onClick={() => { props.onSyncData(props.idx) }} variant={"outline"} className="rounded m-1 w-[100%]">
-            <DownloadIcon />
+          <Button onClick={() => { props.onDownload(props.idx) }} variant={"outline"} className="rounded m-1 w-[100%]" disabled={props.isFetching}>
+            {props.isDownloading? (
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+            ):(
+              <DownloadIcon />
+            )}
             Sync Data
           </Button>
         </CardContent>
