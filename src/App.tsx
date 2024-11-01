@@ -18,19 +18,20 @@ function App() {
   async function syncSingleS3Link(idx: number, isUploading: boolean) {
     let res
     // Handle Upload
-    if(isUploading) {
-      setSelectedUploadIdx(_=>idx)
-      res = await Command.create('aws-s3-sync', ['s3', 'sync', `'${s3Links[idx].filePath}' '${s3Links[idx].s3Path}'`]).execute()
-      setSelectedUploadIdx(_=>-1)
+    if (isUploading) {
+      setSelectedUploadIdx(_ => idx)
+      res = await Command.create('aws-s3-sync', ['s3', 'sync', s3Links[idx].filePath, s3Links[idx].s3Path]).execute()
+      setSelectedUploadIdx(_ => -1)
     }
     // Handle Download
     else {
-      setSelectedDownloadIdx(_=>idx)
-      res= await Command.create('aws-s3-sync', ['s3', 'sync', `'${s3Links[idx].s3Path}' '${s3Links[idx].filePath}'`]).execute()
-      setSelectedDownloadIdx(_=>-1)
+      setSelectedDownloadIdx(_ => idx)
+      res = await Command.create('aws-s3-sync', ['s3', 'sync', s3Links[idx].s3Path, s3Links[idx].filePath]).execute()
+      setSelectedDownloadIdx(_ => -1)
     }
+    console.log(res)
     console.log(res.stderr)
-    console.log(`'${s3Links[idx].filePath}' "${s3Links[idx].s3Path}"`)
+    console.log(`'${s3Links[idx].filePath}' '${s3Links[idx].s3Path}'`)
   }
 
   async function handleDeleteS3Link(idx: number) {
@@ -63,7 +64,6 @@ function App() {
       }
     }
     asyncFunc()
-
   }, [])
 
   return (
