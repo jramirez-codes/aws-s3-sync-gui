@@ -29,9 +29,6 @@ function App() {
       res = await Command.create('aws-s3-sync', ['s3', 'sync', s3Links[idx].s3Path, s3Links[idx].filePath]).execute()
       setSelectedDownloadIdx(_ => -1)
     }
-    console.log(res)
-    console.log(res.stderr)
-    console.log(`'${s3Links[idx].filePath}' '${s3Links[idx].s3Path}'`)
   }
 
   async function handleDeleteS3Link(idx: number) {
