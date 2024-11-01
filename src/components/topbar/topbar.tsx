@@ -1,7 +1,7 @@
 import { DownloadIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "../ui/button";
 import { NewDirectoryForm } from "./ui/newDirectoryForm";
-import { S3Link } from "./types/s3Link";
+import { S3Link } from "../../types/s3Link";
 import React from "react";
 export function Topbar(props:{setS3Links: React.Dispatch<React.SetStateAction<S3Link[]>>}) {
   return (

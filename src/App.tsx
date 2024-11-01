@@ -5,7 +5,7 @@ import "./App.css";
 import { FolderCard } from "./components/folderCard/folderCard";
 import { Topbar } from "./components/topbar/topbar";
 import React from "react";
-import { S3Link } from "./components/topbar/types/s3Link";
+import { S3Link } from "./types/s3Link";
 import { load } from "@tauri-apps/plugin-store";
 function App() {
   const [s3Links, setS3Links] = React.useState<S3Link[]>([])

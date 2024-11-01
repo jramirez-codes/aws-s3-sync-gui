@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { S3Link } from "../topbar/types/s3Link";
+import { S3Link } from "../../types/s3Link";
 
 export function FolderCard(props: {s3Link: S3Link}) {
   console.log(props.s3Link)

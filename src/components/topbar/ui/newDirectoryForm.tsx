@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { open } from '@tauri-apps/plugin-dialog';
 import { load } from '@tauri-apps/plugin-store';
-import { S3Link } from "../types/s3Link";
+import { S3Link } from "../../../types/s3Link";
 
 export function NewDirectoryForm(props: { children: ReactNode, setS3Links: React.Dispatch<React.SetStateAction<S3Link[]>> }) {
   const [title, setTitle] = React.useState<string>("")
