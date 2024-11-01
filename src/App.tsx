@@ -7,6 +7,7 @@ import { Topbar } from "./components/topbar/topbar";
 import React from "react";
 import { S3Link } from "./types/s3Link";
 import { load } from "@tauri-apps/plugin-store";
+import { InfoSheet } from "./components/infoSheet/infoSheet";
 
 function App() {
   const [s3Links, setS3Links] = React.useState<S3Link[]>([])
@@ -71,6 +72,7 @@ function App() {
             )
           })}
         </div>
+        <InfoSheet s3Link={selectedS3Link} setSelectedS3Link={setSelectedS3Link}/>
       </div>
     </>
   );
