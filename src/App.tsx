@@ -20,11 +20,13 @@ function App() {
     // Remove Link From State
     let reducedS3Links = s3Links.filter((_,currIdx)=> currIdx !== idx)
     setS3Links(_=>reducedS3Links)
-    
+
     // Update State Store
     const store = await load('store.json', { autoSave: false });
     await store.set('s3Links', reducedS3Links)
     await store.save()
+
+    setSelectedS3Link(null)
   }
 
   async function handleOpenInfo(idx: number) {
