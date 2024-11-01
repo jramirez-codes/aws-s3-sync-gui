@@ -62,7 +62,6 @@ function App() {
                   syncSingleS3Link(idx)
                 }}
                 onDelete={(idx: number) => {
-                  // console.log("DELETE", idx)
                   handleDeleteS3Link(idx)
                 }}
                 onOpenInfo={(idx: number) => {
