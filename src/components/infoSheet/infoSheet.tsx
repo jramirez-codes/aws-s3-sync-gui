@@ -10,9 +10,9 @@ import {
   AlertDialogTitle,
   // AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import React from "react";
 
 export function InfoSheet(props: { s3Link: S3Link | null, setSelectedS3Link: React.Dispatch<React.SetStateAction<S3Link | null>>}) {
-
   if(props.s3Link !== null) {
     return (
       <AlertDialog open={true}>
