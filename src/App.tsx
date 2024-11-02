@@ -104,7 +104,9 @@ function App() {
                 isDownloading={selectedDownloadIdx === idx}
                 isUploading={selectedUploadIdx === idx}
                 isFetching={
-                  selectedDownloadIdx === idx || selectedUploadIdx === idx
+                  isPullingAllDirectories ||
+                  selectedDownloadIdx === idx ||
+                  selectedUploadIdx === idx
                 }
                 onUpload={(idx: number) => {
                   syncSingleS3Link(idx, true);

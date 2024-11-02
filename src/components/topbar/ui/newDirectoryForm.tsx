@@ -13,15 +13,18 @@ import { Button } from "@/components/ui/button";
 import React, { ReactNode } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { open } from '@tauri-apps/plugin-dialog';
-import { load } from '@tauri-apps/plugin-store';
+import { open } from "@tauri-apps/plugin-dialog";
+import { load } from "@tauri-apps/plugin-store";
 import { S3Link } from "../../../types/s3Link";
 
-export function NewDirectoryForm(props: { children: ReactNode, setS3Links: React.Dispatch<React.SetStateAction<S3Link[]>> }) {
-  const [title, setTitle] = React.useState<string>("")
-  const [description, setDescription] = React.useState<string>("")
-  const [filePath, setFilePath] = React.useState<string>("")
-  const [s3Path, setS3Path] = React.useState<string>("")
+export function NewDirectoryForm(props: {
+  children: ReactNode;
+  setS3Links: React.Dispatch<React.SetStateAction<S3Link[]>>;
+}) {
+  const [title, setTitle] = React.useState<string>("");
+  const [description, setDescription] = React.useState<string>("");
+  const [filePath, setFilePath] = React.useState<string>("");
+  const [s3Path, setS3Path] = React.useState<string>("");
 
   return (
     <Drawer>
@@ -44,7 +47,9 @@ export function NewDirectoryForm(props: { children: ReactNode, setS3Links: React
                 className="rounded"
                 placeholder="Friendly Name"
                 value={title}
-                onChange={(e) => { setTitle(e.target.value) }}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
             </div>
             <div className="grid w-full items-center gap-1.5 mt-3">
@@ -54,7 +59,9 @@ export function NewDirectoryForm(props: { children: ReactNode, setS3Links: React
                 className="rounded"
                 placeholder="Description"
                 value={description}
-                onChange={(e) => { setDescription(e.target.value) }}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
               />
             </div>
             <div className="grid w-full items-center gap-1.5 mt-3">
@@ -62,16 +69,16 @@ export function NewDirectoryForm(props: { children: ReactNode, setS3Links: React
               <Input
                 id="filepath"
                 className="rounded"
-                placeholder="File Path"
+                placeholder="Folder Path"
                 value={filePath}
                 onClick={() => {
                   const asyncFunc = async () => {
                     // Fetch File Path
-                    const selected = await open({ directory: true, });
+                    const selected = await open({ directory: true });
                     // Update Front End State
-                    setFilePath(selected ? selected : "")
-                  }
-                  asyncFunc()
+                    setFilePath(selected ? selected : "");
+                  };
+                  asyncFunc();
                 }}
               />
             </div>
@@ -82,39 +89,42 @@ export function NewDirectoryForm(props: { children: ReactNode, setS3Links: React
                 className="rounded"
                 placeholder="s3://something/"
                 value={s3Path}
-                onChange={(e) => { setS3Path(e.target.value) }}
+                onChange={(e) => {
+                  setS3Path(e.target.value);
+                }}
               />
             </div>
           </div>
         </div>
         <DrawerFooter>
           <DrawerTrigger>
-            <Button 
+            <Button
               className="rounded"
               onClick={() => {
-              const asyncFunc = async () => {
-                const store = await load('store.json', { autoSave: false });
+                const asyncFunc = async () => {
+                  const store = await load("store.json", { autoSave: false });
 
-                let s3Links: S3Link[] = []
-                if (await store.has("s3Links")) {
-                  let storeData = await store.get<S3Link[]>('s3Links');
-                  s3Links = storeData ? storeData : []
-                }
+                  let s3Links: S3Link[] = [];
+                  if (await store.has("s3Links")) {
+                    let storeData = await store.get<S3Link[]>("s3Links");
+                    s3Links = storeData ? storeData : [];
+                  }
 
-                s3Links.push({
-                  title,
-                  description,
-                  filePath,
-                  s3Path
-                })
+                  s3Links.push({
+                    title,
+                    description,
+                    filePath,
+                    s3Path,
+                  });
 
-                await store.set('s3Links', s3Links);
-                await store.save();
+                  await store.set("s3Links", s3Links);
+                  await store.save();
 
-                props.setS3Links(s3Links)
-              }
-              asyncFunc()
-            }}>
+                  props.setS3Links(s3Links);
+                };
+                asyncFunc();
+              }}
+            >
               Save
             </Button>
           </DrawerTrigger>
