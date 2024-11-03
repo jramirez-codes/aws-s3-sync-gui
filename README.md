@@ -1,6 +1,6 @@
 # AWS S3 Sync GUI
 
-A desktop GUI application for synchronizing local files and directories with Amazon S3, built with [Tauri](https://tauri.app/) and [Schadui](https://github.com/muhammadmuzzammil1998/schadui). This application provides a user-friendly interface for the AWS CLI `s3 sync` command, making it easy to transfer files between a local directory and an S3 bucket.
+A desktop GUI application for synchronizing local files and directories with Amazon S3, built with [Tauri](https://tauri.app/) and [Schadui](https://ui.shadcn.com/). This application provides a user-friendly interface for the AWS CLI `s3 sync` command, making it easy to transfer files between a local directory and an S3 bucket.
 
 ## Features
 
@@ -40,7 +40,7 @@ A desktop GUI application for synchronizing local files and directories with Ama
 2. Configure the sync options:
    - **Source Directory**: Local folder to sync from.
    - **Target Bucket**: S3 bucket and directory to sync to.
-   - Additional options (e.g., recursive, exclude patterns).
+   - Additional options (e.g., title, description).
 3. Click **Sync** to start the process.
 
 The application will display logs and progress for each sync operation.
