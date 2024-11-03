@@ -87,7 +87,7 @@ function App() {
     cacheData(reducedS3Links);
 
     // Updated Selected link to empty
-    setSelectedS3Link(null);
+    setSelectedDeleteIdx(-1);
   }
 
   async function handleUpdateS3Link(newS3Link: S3Link) {
