@@ -11,7 +11,7 @@ export function Topbar(props: {
   return (
     <div className="flex justify-between m-2">
       <h1 className="text-xl font-bold mt-1">AWS S3 Sync GUI</h1>
-      <div className="flex">
+      <div className="flex-wrap">
         <NewDirectoryForm setS3Links={(e) => props.setS3Links(e)}>
           <Button className="rounded m-1" variant={"outline"}>
             <PlusIcon />
