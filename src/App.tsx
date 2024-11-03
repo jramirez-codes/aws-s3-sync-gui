@@ -9,14 +9,18 @@ import { Command } from "@tauri-apps/plugin-shell";
 
 function App() {
   const [s3Links, setS3Links] = React.useState<S3Link[]>([]);
-  const [selectedS3Link, setSelectedS3Link] = React.useState<S3Link | null>(
-    null,
-  );
+  const [selectedS3Link, setSelectedS3Link] = React.useState<S3Link | null>(null);
   const [selectedS3LinkIdx, setSelectedS3LinkIdx] = React.useState(-1);
   const [selectedUploadIdx, setSelectedUploadIdx] = React.useState(-1);
   const [selectedDownloadIdx, setSelectedDownloadIdx] = React.useState(-1);
-  const [isPullingAllDirectories, setIsPullingAllDirectories] =
-    React.useState(false);
+  const [isPullingAllDirectories, setIsPullingAllDirectories] = React.useState(false);
+
+  async function cacheData(data: any) {
+    // Update State Store
+    const store = await load("store.json", { autoSave: false });
+    await store.set("s3Links", data);
+    await store.save();
+  }
 
   async function syncSingleS3Link(idx: number, isUploading: boolean) {
     let res;
@@ -60,11 +64,18 @@ function App() {
     setS3Links((_) => reducedS3Links);
 
     // Update State Store
-    const store = await load("store.json", { autoSave: false });
-    await store.set("s3Links", reducedS3Links);
-    await store.save();
+    cacheData(reducedS3Links)
 
+    // Updated Selected link to empty
     setSelectedS3Link(null);
+  }
+
+  async function handleUpdateS3Link(newS3Link: S3Link) {
+    setS3Links(e => {
+      e[selectedS3LinkIdx] = newS3Link
+      cacheData(e)
+      return e
+    })
   }
 
   async function handleOpenInfo(idx: number) {
@@ -129,12 +140,7 @@ function App() {
         <InfoSheet
           s3Link={selectedS3Link}
           setSelectedS3Link={setSelectedS3Link}
-          onS3LinkUpdate={(newS3Link:S3Link)=>{
-            setS3Links(e=>{
-              e[selectedS3LinkIdx] = newS3Link
-              return e
-            })
-          }}
+          onS3LinkUpdate={(newS3Link: S3Link) => { handleUpdateS3Link(newS3Link) }}
         />
       </div>
     </>
