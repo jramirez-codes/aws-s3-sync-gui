@@ -6,6 +6,8 @@ import { S3Link } from "./types/s3Link";
 import { load } from "@tauri-apps/plugin-store";
 import { InfoSheet } from "./components/infoSheet/infoSheet";
 import { Command } from "@tauri-apps/plugin-shell";
+import { ErrorAlert } from "./components/errorAlert/errorAlert";
+import { SingleErrorMessage } from "./types/singleErrorMessage";
 
 function App() {
   const [s3Links, setS3Links] = React.useState<S3Link[]>([]);
@@ -14,7 +16,8 @@ function App() {
   const [selectedUploadIdx, setSelectedUploadIdx] = React.useState(-1);
   const [selectedDownloadIdx, setSelectedDownloadIdx] = React.useState(-1);
   const [isPullingAllDirectories, setIsPullingAllDirectories] = React.useState(false);
-
+  const [errorMessages, setErrorMessages] = React.useState<SingleErrorMessage[]>([])
+  
   async function cacheData(data: any) {
     // Update State Store
     const store = await load("store.json", { autoSave: false });
@@ -45,6 +48,11 @@ function App() {
         s3Links[idx].filePath,
       ]).execute();
       setSelectedDownloadIdx((_) => -1);
+    }
+
+    // Alert User if error has occured
+    if(res.code !== 0) {
+      setErrorMessages([{title: `Error: ${s3Links[idx].title}`, description: "Please check file path"}])
     }
   }
 
@@ -142,6 +150,7 @@ function App() {
           setSelectedS3Link={setSelectedS3Link}
           onS3LinkUpdate={(newS3Link: S3Link) => { handleUpdateS3Link(newS3Link) }}
         />
+        <ErrorAlert errorMessages={errorMessages} setErrorMessages={setErrorMessages}/>
       </div>
     </>
   );
