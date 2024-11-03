@@ -103,7 +103,7 @@ function App() {
     setSelectedS3Link(s3Links[idx]);
   }
 
-  // Fetch Links
+  // Fetch Links from cached store
   React.useEffect(() => {
     const asyncFunc = async () => {
       const store = await load("store.json", { autoSave: false });
