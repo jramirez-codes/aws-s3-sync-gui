@@ -12,6 +12,7 @@ function App() {
   const [selectedS3Link, setSelectedS3Link] = React.useState<S3Link | null>(
     null,
   );
+  const [selectedS3LinkIdx, setSelectedS3LinkIdx] = React.useState(-1);
   const [selectedUploadIdx, setSelectedUploadIdx] = React.useState(-1);
   const [selectedDownloadIdx, setSelectedDownloadIdx] = React.useState(-1);
   const [isPullingAllDirectories, setIsPullingAllDirectories] =
@@ -67,6 +68,7 @@ function App() {
   }
 
   async function handleOpenInfo(idx: number) {
+    setSelectedS3LinkIdx(idx)
     setSelectedS3Link(s3Links[idx]);
   }
 
@@ -127,6 +129,13 @@ function App() {
         <InfoSheet
           s3Link={selectedS3Link}
           setSelectedS3Link={setSelectedS3Link}
+          onS3LinkUpdate={(newS3Link:S3Link)=>{
+            console.log(newS3Link)
+            setS3Links(e=>{
+              e[selectedS3LinkIdx] = newS3Link
+              return e
+            })
+          }}
         />
       </div>
     </>

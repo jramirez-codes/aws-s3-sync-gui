@@ -1,11 +1,11 @@
 import { S3Link } from "@/types/s3Link";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "../ui/textarea";
 import {
   Card,
   CardContent,
   CardDescription,
-  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 export function InfoSheet(props: {
   s3Link: S3Link | null;
   setSelectedS3Link: React.Dispatch<React.SetStateAction<S3Link | null>>;
+  onS3LinkUpdate: Function;
 }) {
   if (props.s3Link !== null) {
     return (
@@ -33,9 +34,18 @@ export function InfoSheet(props: {
                 <CardDescription>Information</CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-2">
+                <form className="space-y-2" onSubmit={(e:any) => {
+                  e.preventDefault()
+                  props.onS3LinkUpdate({
+                    title: e.target[0].value,
+                    description: e.target[1].value,
+                    filePath: e.target[2].value,
+                    s3Path: e.target[3].value
+                  })
+                  props.setSelectedS3Link(null);
+                }}>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Title</Label>
+                    <Label htmlFor="title">Title</Label>
                     <Input
                       id="title"
                       placeholder="Title"
@@ -44,7 +54,16 @@ export function InfoSheet(props: {
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Folder Path</Label>
+                    <Label htmlFor="descriptioon">Description</Label>
+                    <Textarea
+                      id="description"
+                      className="rounded"
+                      placeholder="Description"
+                      defaultValue={props.s3Link.description}
+                    />
+                  </div>
+                  <div className="flex flex-col space-y-1.5">
+                    <Label htmlFor="folderPath">Folder Path</Label>
                     <Input
                       id="folderPath"
                       placeholder="Folder Path"
@@ -53,20 +72,11 @@ export function InfoSheet(props: {
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">S3 Path</Label>
+                    <Label htmlFor="s3Path">S3 Path</Label>
                     <Input
                       id="s3Path"
                       className="rounded"
                       placeholder="s3://something/"
-                      defaultValue={props.s3Link.filePath}
-                    />
-                  </div>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Title</Label>
-                    <Input
-                      id="folderPath"
-                      className="rounded"
-                      placeholder="folderPath"
                       defaultValue={props.s3Link.filePath}
                     />
                   </div>

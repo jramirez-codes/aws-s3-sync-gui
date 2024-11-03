@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { open } from "@tauri-apps/plugin-dialog";
 import { load } from "@tauri-apps/plugin-store";
 import { S3Link } from "../../../types/s3Link";
+import { Textarea } from "@/components/ui/textarea";
 
 export function NewDirectoryForm(props: {
   children: ReactNode;
@@ -54,7 +55,7 @@ export function NewDirectoryForm(props: {
             </div>
             <div className="grid w-full items-center gap-1.5 mt-3">
               <Label htmlFor="email">Description</Label>
-              <Input
+              <Textarea
                 id="Description"
                 className="rounded"
                 placeholder="Description"
