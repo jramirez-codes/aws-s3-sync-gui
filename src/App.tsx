@@ -130,7 +130,6 @@ function App() {
           s3Link={selectedS3Link}
           setSelectedS3Link={setSelectedS3Link}
           onS3LinkUpdate={(newS3Link:S3Link)=>{
-            console.log(newS3Link)
             setS3Links(e=>{
               e[selectedS3LinkIdx] = newS3Link
               return e
