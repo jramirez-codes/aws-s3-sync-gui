@@ -8,7 +8,7 @@ import { InfoSheet } from "./components/infoSheet/infoSheet";
 import { Command } from "@tauri-apps/plugin-shell";
 import { ErrorAlert } from "./components/errorAlert/errorAlert";
 import { SingleErrorMessage } from "./types/singleErrorMessage";
-import { DeleteCard } from "./components/deleteCard.tsx/deleteCard";
+import { DeleteCard } from "./components/deleteCard/deleteCard";
 
 function App() {
   const [s3Links, setS3Links] = React.useState<S3Link[]>([]);
