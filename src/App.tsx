@@ -8,16 +8,23 @@ import { InfoSheet } from "./components/infoSheet/infoSheet";
 import { Command } from "@tauri-apps/plugin-shell";
 import { ErrorAlert } from "./components/errorAlert/errorAlert";
 import { SingleErrorMessage } from "./types/singleErrorMessage";
+import { DeleteCard } from "./components/deleteCard.tsx/deleteCard";
 
 function App() {
   const [s3Links, setS3Links] = React.useState<S3Link[]>([]);
-  const [selectedS3Link, setSelectedS3Link] = React.useState<S3Link | null>(null);
+  const [selectedS3Link, setSelectedS3Link] = React.useState<S3Link | null>(
+    null,
+  );
   const [selectedS3LinkIdx, setSelectedS3LinkIdx] = React.useState(-1);
   const [selectedUploadIdx, setSelectedUploadIdx] = React.useState(-1);
   const [selectedDownloadIdx, setSelectedDownloadIdx] = React.useState(-1);
-  const [isPullingAllDirectories, setIsPullingAllDirectories] = React.useState(false);
-  const [errorMessages, setErrorMessages] = React.useState<SingleErrorMessage[]>([])
-  
+  const [selectedDeleteIdx, setSelectedDeleteIdx] = React.useState(-1);
+  const [isPullingAllDirectories, setIsPullingAllDirectories] =
+    React.useState(false);
+  const [errorMessages, setErrorMessages] = React.useState<
+    SingleErrorMessage[]
+  >([]);
+
   async function cacheData(data: any) {
     // Update State Store
     const store = await load("store.json", { autoSave: false });
@@ -51,8 +58,13 @@ function App() {
     }
 
     // Alert User if error has occured
-    if(res.code !== 0) {
-      setErrorMessages([{title: `Error: ${s3Links[idx].title}`, description: "Please check file path"}])
+    if (res.code !== 0) {
+      setErrorMessages([
+        {
+          title: `Error: ${s3Links[idx].title}`,
+          description: "Please check file path",
+        },
+      ]);
     }
   }
 
@@ -72,22 +84,22 @@ function App() {
     setS3Links((_) => reducedS3Links);
 
     // Update State Store
-    cacheData(reducedS3Links)
+    cacheData(reducedS3Links);
 
     // Updated Selected link to empty
     setSelectedS3Link(null);
   }
 
   async function handleUpdateS3Link(newS3Link: S3Link) {
-    setS3Links(e => {
-      e[selectedS3LinkIdx] = newS3Link
-      cacheData(e)
-      return e
-    })
+    setS3Links((e) => {
+      e[selectedS3LinkIdx] = newS3Link;
+      cacheData(e);
+      return e;
+    });
   }
 
   async function handleOpenInfo(idx: number) {
-    setSelectedS3LinkIdx(idx)
+    setSelectedS3LinkIdx(idx);
     setSelectedS3Link(s3Links[idx]);
   }
 
@@ -136,7 +148,7 @@ function App() {
                   syncSingleS3Link(idx, false);
                 }}
                 onDelete={(idx: number) => {
-                  handleDeleteS3Link(idx);
+                  setSelectedDeleteIdx(idx);
                 }}
                 onOpenInfo={(idx: number) => {
                   handleOpenInfo(idx);
@@ -148,9 +160,21 @@ function App() {
         <InfoSheet
           s3Link={selectedS3Link}
           setSelectedS3Link={setSelectedS3Link}
-          onS3LinkUpdate={(newS3Link: S3Link) => { handleUpdateS3Link(newS3Link) }}
+          onS3LinkUpdate={(newS3Link: S3Link) => {
+            handleUpdateS3Link(newS3Link);
+          }}
         />
-        <ErrorAlert errorMessages={errorMessages} setErrorMessages={setErrorMessages}/>
+        <ErrorAlert
+          errorMessages={errorMessages}
+          setErrorMessages={setErrorMessages}
+        />
+        <DeleteCard
+          s3Link={selectedDeleteIdx !== -1 ? s3Links[selectedDeleteIdx] : null}
+          onS3LinkDelete={() => {
+            handleDeleteS3Link(selectedDeleteIdx);
+          }}
+          setSelectedS3Link={() => setSelectedDeleteIdx(-1)}
+        />
       </div>
     </>
   );
