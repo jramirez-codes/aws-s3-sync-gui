@@ -34,16 +34,19 @@ export function InfoSheet(props: {
                 <CardDescription>Information</CardDescription>
               </CardHeader>
               <CardContent>
-                <form className="space-y-2" onSubmit={(e:any) => {
-                  e.preventDefault()
-                  props.onS3LinkUpdate({
-                    title: e.target[0].value,
-                    description: e.target[1].value,
-                    filePath: e.target[2].value,
-                    s3Path: e.target[3].value
-                  })
-                  props.setSelectedS3Link(null);
-                }}>
+                <form
+                  className="space-y-2"
+                  onSubmit={(e: any) => {
+                    e.preventDefault();
+                    props.onS3LinkUpdate({
+                      title: e.target[0].value,
+                      description: e.target[1].value,
+                      filePath: e.target[2].value,
+                      s3Path: e.target[3].value,
+                    });
+                    props.setSelectedS3Link(null);
+                  }}
+                >
                   <div className="flex flex-col space-y-1.5">
                     <Label htmlFor="title">Title</Label>
                     <Input
@@ -68,7 +71,7 @@ export function InfoSheet(props: {
                       id="folderPath"
                       placeholder="Folder Path"
                       className="rounded"
-                      defaultValue={props.s3Link.s3Path}
+                      defaultValue={props.s3Link.filePath}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
@@ -77,7 +80,7 @@ export function InfoSheet(props: {
                       id="s3Path"
                       className="rounded"
                       placeholder="s3://something/"
-                      defaultValue={props.s3Link.filePath}
+                      defaultValue={props.s3Link.s3Path}
                     />
                   </div>
                   <div className="flex flex-col space-y-1.5">
